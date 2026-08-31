@@ -1,0 +1,3 @@
+import {prisma} from '@/lib/prisma'
+export const dynamic='force-dynamic'
+export default async function Page(){const rows=await prisma.training.findMany({include:{questions:true}});return <><div className="hero"><h1>Treinamentos</h1><p>Conteúdo, avaliações e progresso.</p></div>{rows.map((t:any)=><div className="card" key={t.id}><h2>{t.title}</h2><div className="muted">{t.questions.length} questões • {t.active?'Ativo':'Inativo'}</div></div>)}</>}

@@ -1,0 +1,61 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+model Svc {
+  id String @id @default(cuid())
+  code String @unique
+  name String?
+  people Person[]
+  createdAt DateTime @default(now())
+}
+model Person {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  cpf String?
+  phone String?
+  profile String?
+  vec String?
+  geotab String?
+  ticketlog String?
+  geotabRequested Boolean @default(false)
+  geotabRequestedAt DateTime?
+  svcId String?
+  svc Svc? @relation(fields:[svcId], references:[id])
+  attempts Attempt[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+model Training {
+  id String @id @default(cuid())
+  title String
+  active Boolean @default(true)
+  questions Question[]
+  attempts Attempt[]
+}
+model Question {
+  id String @id @default(cuid())
+  order Int
+  text String
+  correctAnswer String
+  trainingId String
+  training Training @relation(fields:[trainingId], references:[id], onDelete:Cascade)
+}
+model Attempt {
+  id String @id @default(cuid())
+  score Int
+  passed Boolean
+  personId String
+  trainingId String
+  person Person @relation(fields:[personId], references:[id])
+  training Training @relation(fields:[trainingId], references:[id])
+  createdAt DateTime @default(now())
+  sourceKey String @unique
+}
+model ImportLog {
+  id String @id @default(cuid())
+  filename String
+  peopleCount Int
+  svcCount Int
+  createdAt DateTime @default(now())
+}

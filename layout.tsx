@@ -1,0 +1,4 @@
+import './globals.css'
+import Link from 'next/link'
+export const metadata={title:'Biblioteca Frota Fixa'}
+export default function Layout({children}:{children:React.ReactNode}){return <html lang="pt-BR"><body><div className="shell"><aside className="side"><div className="brand">FF <b>Control</b></div><nav className="nav"><Link href="/">Visão geral</Link><Link href="/pessoas">Pessoas & SVC</Link><Link href="/treinamentos">Treinamentos</Link><Link href="/acessos">Acessos</Link><Link href="/dashboard">Dashboard</Link><Link href="/admin">Administração</Link><Link href="/importar">Importar base</Link></nav></aside><main className="main">{children}</main></div></body></html>}

@@ -1,0 +1,3 @@
+import {prisma} from '@/lib/prisma'
+export const dynamic='force-dynamic'
+export default async function Page(){const rows=await prisma.person.findMany({include:{svc:true},orderBy:{name:'asc'},take:500});return <><div className="hero"><h1>Pessoas & SVC</h1><p>Base operacional centralizada.</p></div><div className="card"><table><thead><tr><th>Nome</th><th>SVC</th><th>Perfil</th><th>E-mail</th></tr></thead><tbody>{rows.map((p:any)=><tr key={p.id}><td>{p.name}</td><td>{p.svc?.code||'-'}</td><td>{p.profile||'-'}</td><td>{p.email}</td></tr>)}</tbody></table></div></>}
