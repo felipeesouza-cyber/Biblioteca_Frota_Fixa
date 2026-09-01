@@ -1,0 +1,3 @@
+import {prisma} from '@/lib/prisma'
+export const dynamic='force-dynamic'
+export default async function Page(){const rows=await prisma.person.findMany({orderBy:{name:'asc'},take:500});return <><div className="hero"><h1>Acessos</h1><p>VEC FLEET, GeoTab e TicketLog.</p></div><div className="card"><table><thead><tr><th>Nome</th><th>VEC</th><th>GeoTab</th><th>TicketLog</th></tr></thead><tbody>{rows.map((p:any)=><tr key={p.id}><td>{p.name}</td><td>{p.vec||'Pendente'}</td><td>{p.geotab||'Pendente'}</td><td>{p.ticketlog||'Pendente'}</td></tr>)}</tbody></table></div></>}
