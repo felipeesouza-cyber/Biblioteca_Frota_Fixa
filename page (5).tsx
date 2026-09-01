@@ -1,5 +1,0 @@
-import { auth } from '@/auth'
-import { redirect } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
-export const dynamic='force-dynamic'
-export default async function Admin(){const session=await auth();if(!session)redirect('/login');const logs=await prisma.importLog.findMany({orderBy:{createdAt:'desc'},take:10});return <><div className="hero"><h1>Administração</h1><p>Importações e operação da Biblioteca FF.</p></div><div className="card"><h3>Importação de base</h3><p className="muted">Use o Excel com as abas SVC, Dados pessoais e Retenção. O sistema atualiza a base e mantém o histórico das avaliações.</p><a href="/importar"><button>Ir para importação</button></a></div><div className="card" style={{marginTop:16}}><h3>Histórico recente</h3><table><thead><tr><th>Arquivo</th><th>Pessoas</th><th>SVCs</th><th>Data</th></tr></thead><tbody>{logs.map(l=><tr key={l.id}><td>{l.filename}</td><td>{l.peopleCount}</td><td>{l.svcCount}</td><td>{l.createdAt.toLocaleString('pt-BR')}</td></tr>)}</tbody></table></div></>}
