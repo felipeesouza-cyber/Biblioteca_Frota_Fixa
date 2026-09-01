@@ -56,7 +56,7 @@ function Access({search,setSearch}:{search:string;setSearch:(v:string)=>void}){
 }
 
 function Trainings(){
- const bySvc=new Map<string,{people:Set<number>;evaluated:Set<string>}>();
+ const bySvc=new Map();
  for(const p of data.people){const k=p.svc||'S.P.'; if(!bySvc.has(k))bySvc.set(k,{people:new Set(),evaluated:new Set()});bySvc.get(k)!.people.add(p.id)}
  for(const e of data.evaluations){if(!bySvc.has(e.svc))bySvc.set(e.svc,{people:new Set(),evaluated:new Set()});bySvc.get(e.svc)!.evaluated.add(e.email||norm(e.name))}
  const rows=[...bySvc.entries()].map(([svc,v])=>({svc,people:v.people.size,evaluated:v.evaluated.size,pending:Math.max(0,v.people.size-v.evaluated.size)})).sort((a,b)=>b.people-a.people));
